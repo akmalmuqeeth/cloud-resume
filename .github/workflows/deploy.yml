@@ -22,7 +22,6 @@ jobs:
 
     - name: Sync S3 bucket
       run: |
-        echo "${{ toJson(vars) }}"
         aws s3 sync . s3://${{ vars.S3_BUCKET_NAME }} --delete --exclude ".git/*" --exclude ".github/*"
     
     # Invalidate cloudfront cache
