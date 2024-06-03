@@ -22,10 +22,10 @@ jobs:
 
     - name: Sync S3 bucket
       run: |
-        echo "here sync ${{ toJson(vars) }}"
-        aws s3 sync . s3://${{ vars.prod.S3_BUCKET_NAME }} --delete --exclude ".git/*" --exclude ".github/*"
+        echo "${{ toJson(vars) }}"
+        aws s3 sync . s3://${{ vars.S3_BUCKET_NAME }} --delete --exclude ".git/*" --exclude ".github/*"
     
     # Invalidate cloudfront cache
     - name: Invalidate CloudFront cache
       run: |
-        aws cloudfront create-invalidation --distribution-id ${{ vars.prod.CLOUDFRONT_DIST_ID }} --paths "/*"
+        aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DIST_ID }} --paths "/*"
