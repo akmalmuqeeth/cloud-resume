@@ -22,14 +22,10 @@ jobs:
 
     - name: Sync S3 bucket
       run: |
-        
+        echo "here sync ${{ vars }}"
         aws s3 sync . s3://${{ vars.prod.S3_BUCKET_NAME }} --delete --exclude ".git/*" --exclude ".github/*"
     
     # Invalidate cloudfront cache
     - name: Invalidate CloudFront cache
       run: |
         aws cloudfront create-invalidation --distribution-id ${{ vars.prod.CLOUDFRONT_DIST_ID }} --paths "/*"
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: us-east-1
