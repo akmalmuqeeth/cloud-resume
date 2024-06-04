@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod
     steps:
+    - name: log
+      run: echo "${{ toJson(vars) }}"
+
     - name: Checkout repository
       uses: actions/checkout@v3
 
@@ -28,3 +31,6 @@ jobs:
     - name: Invalidate CloudFront cache
       run: |
         aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DIST_ID }} --paths "/*"
+    
+    - name: done
+      run: echo "Completed."
